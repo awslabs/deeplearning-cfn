@@ -67,7 +67,7 @@ Clone the [awslabs/deeplearning-cfn](https://github.com/awslabs/deeplearning-cfn
 
 **Note:** This could take a few minutes.  
 
-    git clone https://github.com/nswamy/deeplearning-cfn $EFS_MOUNT/deeplearning-cfn && \
+    git clone https://github.com/awslabs/deeplearning-cfn $EFS_MOUNT/deeplearning-cfn && \
     cd $EFS_MOUNT/deeplearning-cfn && \
     #
     #fetches dmlc/mxnet and tensorflow/models repos as submodules
