@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: ASG Launch/Terminate/Errors trigger this function to send cfn-signal to cloudformation and etup complete message on sqs when asg is setup.
+Resources:
+  snsmessagepython:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: lambda_function.lambda_handler
+      Runtime: python2.7
+      CodeUri: .
+      Description: ASG Launch/Terminate/Errors trigger this function to send cfn-signal to cloudformation and etup complete message on sqs when asg is setup.
+      MemorySize: 128
+      Timeout: 3
+      Events:
+        SNS1:
+          Type: SNS
+          Properties:
+            Topic:
+              Ref: SNSTopic1
+  SNSTopic1:
+    Type: 'AWS::SNS::Topic'
