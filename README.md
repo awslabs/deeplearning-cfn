@@ -14,7 +14,7 @@ We've updated the AWS CloudFormation Deep Learning template to add some exciting
 	*  Amazon EFS allows sharing of code, data, and results across worker instances.  
 	*  Using Amazon EFS doesn't degrade performance for densely packed files (for example, .rec files containing image data).  
 
-* We now support creating a cluster of instances running the Ubuntu operating system. See the [Ubuntu Deep Learning AMI](https://aws.amazon.com/marketplace/pp/B06VSPXKDX).
+* We now support creating a cluster of instances running Ubuntu. See the [Ubuntu Deep Learning AMI](https://aws.amazon.com/marketplace/pp/B06VSPXKDX).
 
 ## EC2 Cluster Architecture 
 The following architecture diagram shows the EC2 cluster infrastructure.  
