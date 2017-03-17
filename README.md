@@ -65,7 +65,7 @@ To demonstrate how to run distributed training using [MXNet](http://mxnet.io/) a
 ### Log in to the Master Instance
 Follow **[Step 3](cfn-template/StackSetup.md#logintomaster)** in [Using the AWS CloudFormation Deep Learning Template](cfn-template/StackSetup.md).
 
-Clone the [awslabs/deeplearning-cfn](https://github.com/awslabs/deeplearning-cfn) repo that contains the examples onto the EFS mount:
+### Clone the [awslabs/deeplearning-cfn](https://github.com/awslabs/deeplearning-cfn) repo that contains the examples onto the EFS mount
 
 **Note:** This could take a few minutes.  
 
