@@ -54,7 +54,7 @@ For information about troubleshooting stack creation, see [Troubleshooting AWS C
   
 ## Step 2: Find the number of worker instances that successfully launched
 
-As noted earlier, you might not always be able to launch the requested number of worker instances because of high demand on the type of instance that you chose or because of your account limits. If the stack is unable to launch even a single instance within the timeout period, AWS CloudFormation  rolls the stack back.
+As noted earlier, we might not always be able provision the requested number of worker instances and the stack would dynamically adjust the cluster to the maximum number of available worker instances when an instance fails to provision (perhaps due to reached limit). If the stack is unable to launch even a single instance within the timeout period, AWS CloudFormation  rolls the stack back.
 
 **To find the number of workers that the template was able to launch:**
 
