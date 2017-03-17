@@ -139,7 +139,7 @@ Run the distributed training across all of the workers:
 
 Because the logs of all of the workers and the process status processes are stored on Amazon EFS, you can now monitor them on the master:
 
-    tail -f /myEFSvolume/deeplearning-cfn/examples/tensorflow/logs/*
+    tail -f $EFS_MOUNT/deeplearning-cfn/examples/tensorflow/logs/*
 
 We were able train this model in an hour on 2 P2.8x EC2 instances running 2 process status processes and 16 worker processes for 200000 steps and reduce the loss to 0.82 averaged across the 16 workers.
 
@@ -152,7 +152,7 @@ Running the evaluation script on the trained model achieves an accuracy of 77%:
 
 You can visualize the training on [TensorBoard](https://www.tensorflow.org/get_started/summaries_and_tensorboard) by running the following command on the master node. TensorBoard starts running on the private IP address of the master instance and port 6006. Make a note of this IP address because you will use it in the next command.
 
-    tensorboard --logdir /myEFSvolume/deeplearning-cfn/examples/tensorflow/train
+    tensorboard --logdir $EFS_MOUNT/deeplearning-cfn/examples/tensorflow/train
 
 Now use SSH port forwarding to see TensorBoard on your local computer. Run a command similar to the following on the local computer. (This uses SSH agent forwarding for credentials.)
 
