@@ -62,7 +62,8 @@ To set up a deep learning AWS CloudFormation stack, follow [Using the AWS CloudF
 ## Running Distributed Training
 To demonstrate how to run distributed training using [MXNet](http://mxnet.io/) and [Tensorflow](https://www.tensorflow.org/) frameworks, we use the standard [CIFAR-10 model](https://www.cs.toronto.edu/~kriz/cifar.html).  CIFAR-10 is a sufficiently complex network that benefits from a distributed setup and that can be quickly trained on such a setup.  
 
-[Log in to the master instance](cfn-template/StackSetup.md#logintomaster). Follow **Step 3** in [Using the AWS CloudFormation Deep Learning Template](cfn-template/StackSetup.md).
+### Log in to the Master Instance
+Follow **[Step 3](cfn-template/StackSetup.md#logintomaster)** in [Using the AWS CloudFormation Deep Learning Template](cfn-template/StackSetup.md).
 
 Clone the [awslabs/deeplearning-cfn](https://github.com/awslabs/deeplearning-cfn) repo that contains the examples onto the EFS mount:
 
