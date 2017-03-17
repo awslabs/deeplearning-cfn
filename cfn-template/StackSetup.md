@@ -101,20 +101,20 @@ For examples of running distributed training, see [Deep Learning Using MXNet and
 
 # FAQ
 
-###Q. How do I change the IP addresses that are allowed to connect to the master instance with SSH?
+### Q. How do I change the IP addresses that are allowed to connect to the master instance with SSH?
 The AWS CloudFormation stack output contains the security group that controls the inbound IP addresses for SSH access to the master instance. Use this security group to change your inbound IP addresses.  
 
-###Q. When an instance is replaced, are the IP addresses of the instances updated? 
+### Q. When an instance is replaced, are the IP addresses of the instances updated? 
 No. You must update IP addresses manually.  
 
-###Q. Does the master instance participate in training and validation?
+### Q. Does the master instance participate in training and validation?
 Yes, the master instance acts both as a proxy and as a distributed training and validation instance.
 
-###Q. Why are the instances in an Auto Scaling group? 
+### Q. Why are the instances in an Auto Scaling group? 
 An [Auto Scaling](https://aws.amazon.com/autoscaling/) group maintains the number of desired instances by launching a new instance if an instance fails. There are two Auto Scaling groups: one for the master and one for the workers in the private subnet. Because only the master instance has a public endpoint to access the hosts in the stack, if the master instance becomes unavailable, you can terminate it. The associated Auto Scaling group automatically launches a new master instance with a new public endpoint. 
 
-###Q. When a new worker instance is added or an existing instance is replaced, does AWS CloudFormation update the IP addresses on the master instance?
+### Q. When a new worker instance is added or an existing instance is replaced, does AWS CloudFormation update the IP addresses on the master instance?
 No, this template does not have the capability to automatically update the IP address of the replacement instance.
 
-###Q. Why does stack creation fail when I use an existing Amazon EFS file system that is attached to a mount target?
+### Q. Why does stack creation fail when I use an existing Amazon EFS file system that is attached to a mount target?
 You can use an Amazon EFS file system in only one VPC at a time. If your Amazon EFS system is attached to a different VPC, delete the association by following the instructions in [Creating or Deleting Mount Targets in a VPC](http://docs.aws.amazon.com/efs/latest/ug/manage-fs-access-create-delete-mount-targets.html).
