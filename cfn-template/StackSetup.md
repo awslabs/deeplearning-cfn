@@ -1,4 +1,4 @@
-#Using the AWS CloudFormation Deep Learning Template
+# Using the AWS CloudFormation Deep Learning Template
 
 Setting up and using the template requires three steps:
 
