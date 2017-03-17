@@ -97,7 +97,7 @@ SSH agent forwarding securely connects the instances within the VPC, which are c
          ssh <USER-ID>@<MASTER-WORKER-PUBLIC-DNS/IP>
          #USER-ID is ec2-user for Amazon Linux, ubuntu for Ubuntu
 
-For examples of running distributed training, see [Deep Learning Using MXNet and TensorFlow](../README.md).
+For examples of running distributed training, see [Deep Learning on AWS Using MXNet and TensorFlow](../README.md).
 
 # FAQ
 
