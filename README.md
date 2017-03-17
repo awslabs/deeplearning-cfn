@@ -1,4 +1,4 @@
-# **Distributed Deep Learning Using MXNet and TensorFlow**
+# **Distributed Deep Learning on AWS Using MXNet and TensorFlow**
 
 [AWS CloudFormation](https://aws.amazon.com/cloudformation), which creates and configures Amazon Web Services resources with a template, simplifies the process of setting up a distributed deep learning cluster. The AWS CloudFormation Deep Learning template uses the [Amazon Deep Learning AMI](https://aws.amazon.com/marketplace/pp/B01M0AXXQB) (which provides MXNet, TensorFlow, Caffe, Theano, Torch, and CNTK frameworks) to launch a cluster of [EC2](https://aws.amazon.com/ec2) instances and other AWS resources needed to perform distributed deep learning. With this template, we continue with our mission to make [distributed deep learning easy] (https://aws.amazon.com/blogs/compute/distributed-deep-learning-made-easy/). AWS CloudFormation creates all resources in the customer account. 
 
@@ -111,7 +111,7 @@ and unzip the tar.gz file onto the EFS mount so you don't have to copy or downlo
     wget http://www.cs.toronto.edu/~kriz/cifar-10-binary.tar.gz --directory-prefix=$EFS_MOUNT/cifar10_data \
     && tar -xzvf $EFS_MOUNT/cifar10_data/cifar-10-binary.tar.gz -C $EFS_MOUNT/cifar10_data
 
-We have included a script that generates the commands to run the workers and parameter servers on the worker instances. The script takes training_script as an argument, you can also pass the arguments that are needed by your distributed training script.
+We have included a script in the [awslabs/deeplearning-cfn](https://github.com/awslabs/deeplearning-cfn/blob/master/examples/tensorflow/generate_trainer.py) repo that generates the commands to run the tensorflow workers and parameter servers on the instances. The script takes training_script as an argument, you can also pass the arguments that are needed by your distributed training script as additional arguments.
 
     cd $EFS_MOUNT/deeplearning-cfn/examples/tensorflow && \
     # generates commands to run workers and parameter-servers on all the workers \
