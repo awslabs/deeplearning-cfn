@@ -20,7 +20,7 @@
         "p2.16xlarge",
         "p2.8xlarge",
         "p2.xlarge",
-        "g2.8xlarge", 
+        "g2.8xlarge",
         "g2.2xlarge",
         "t2.small",
         "t2.medium",
@@ -107,14 +107,18 @@
   },
   "Mappings" : {
     "AmazonLinux" : {
-      "us-east-1"      : { "AMI" : "ami-e7c96af1"  },
-      "us-west-2"      : { "AMI" : "ami-dfb13ebf"  },
-      "eu-west-1"      : { "AMI" : "ami-6e5d6808"  }
+      "us-east-1"      : { "AMI" : "ami-e47723f2"  },
+      "us-east-2"      : {"AMI"  : "ami-ed3b1d88"  },
+      "us-west-2"      : { "AMI" : "ami-c6dfb2a6"  },
+      "eu-west-1"      : { "AMI" : "ami-df0a1ab9"  },
+      "ap-southeast-2" : { "AMI" : "ami-c1ced9a2"  }
     },
     "Ubuntu" : {
-      "us-east-1"      : { "AMI" : "ami-9548e783"  },
-      "us-west-2"      : { "AMI" : "ami-e9038d89"  },
-      "eu-west-1"      : { "AMI" : "ami-627d4a04"  }
+      "us-east-1"      : { "AMI" : "ami-b67e2aa0"  },
+      "us-east-2"      : { "AMI" : "ami-8d381ee8"  },
+      "us-west-2"      : { "AMI" : "ami-d9deb3b9"  },
+      "eu-west-1"      : { "AMI" : "ami-c50c1ca3"  },
+      "ap-southeast-2" : { "AMI" : "ami-6acdda09"  }
     },
     "SubnetConfig" : {
       "VPC"     : { "CIDR" : "10.0.0.0/16" },
@@ -123,15 +127,18 @@
     },
     "S3" : {
       "us-east-1"      : { "URL" : "https://s3.amazonaws.com/" },
+      "us-east-2"      : { "URL" : "https://s3-us-east-2.amazonaws.com/" },
       "us-west-2"      : { "URL" : "https://s3-us-west-2.amazonaws.com/" },
-      "eu-west-1"      : { "URL" : "https://s3-eu-west-1.amazonaws.com/" }
+      "eu-west-1"      : { "URL" : "https://s3-eu-west-1.amazonaws.com/" },
+      "ap-southeast-2" : { "URL" : "https://s3-ap-southeast-2.amazonaws.com/" }
     },
     "Other" : {
       "S3SourceBucket" : { "BucketNameSuffix" : "-aws-dl-cfn" },
-      "Setup" : { "Filename" : "dl_cfn_setup.py" },
+      "Setup" : { "Filename" : "dl_cfn_setup_v2.py" },
       "LambdaFunction" : { "FileName": "dl_cfn_setup_lambda.zip" },
       "TimeoutValues" : { "WaitConditionTimeout" : "3300", "MasterLaunchTimeout" : "600"},
-      "DefaultUser" : {"AmazonLinux": "ec2-user", "Ubuntu": "ubuntu"}
+      "DefaultUser" : {"AmazonLinux": "ec2-user", "Ubuntu": "ubuntu"},
+      "CfnPath" : {"AmazonLinux": "/opt/aws/bin", "Ubuntu": "/usr/local/bin"}
     }
   },
   "Resources" : {
@@ -176,7 +183,7 @@
           "Statement": [{
             "Effect": "Allow",
               "Action" : [ "autoscaling:DescribeAutoScalingGroups", "autoscaling:SetDesiredCapacity",
-                          "autoscaling:SuspendProcesses", 
+                          "autoscaling:SuspendProcesses",
                           "cloudformation:DescribeStackResource", "cloudformation:SignalResource"
                           ],
             "Resource": "*"
@@ -189,7 +196,7 @@
           "Version": "2012-10-17",
           "Statement": [{
             "Effect": "Allow",
-              "Action" : [ 
+              "Action" : [
                           "sqs:sendmessage"
                           ],
               "Resource" : { "Fn::GetAtt" : [ "MasterQueue", "Arn" ] }
@@ -203,7 +210,7 @@
       "Type": "AWS::Lambda::Permission",
       "Properties": {
         "FunctionName": {
-          "Fn::GetAtt": ["ResourceMetadataLambdaFunction", "Arn"] 
+          "Fn::GetAtt": ["ResourceMetadataLambdaFunction", "Arn"]
         },
         "Action": "lambda:InvokeFunction",
         "Principal": "sns.amazonaws.com",
@@ -287,13 +294,13 @@
           "Tags" : [
             { "Key" : "Name", "Value" : {"Fn::Join" : ["", [{ "Ref" : "AWS::StackName" }, "_SSH" ] ] } }
           ],
-        "SecurityGroupIngress" : [ 
+        "SecurityGroupIngress" : [
             { "IpProtocol" : "tcp", "FromPort" : "22",  "ToPort" : "22",  "CidrIp" : { "Ref" : "SSHLocation" } }
-          ],          
+          ],
         "SecurityGroupEgress" : [
          ]
       }
-    },        
+    },
     "MasterSecurityGroup" : {
       "Type" : "AWS::EC2::SecurityGroup",
       "Properties" : {
@@ -303,55 +310,55 @@
             { "Key" : "Name", "Value" : {"Fn::Join" : ["", [{ "Ref" : "AWS::StackName" }, "_Master" ] ] } }
           ],
         "SecurityGroupIngress" : [
-          ],          
+          ],
         "SecurityGroupEgress" : [
-         ]      
+         ]
       }
     },
     "MasterSecurityIngress1" : {
       "Type" : "AWS::EC2::SecurityGroupIngress",
-      "DependsOn" : ["MasterSecurityGroup"],      
+      "DependsOn" : ["MasterSecurityGroup"],
       "Properties" : {
         "GroupId" : { "Fn::GetAtt": [ "MasterSecurityGroup", "GroupId" ] },
-         "IpProtocol" : "tcp", 
-         "FromPort" : "0", 
+         "IpProtocol" : "tcp",
+         "FromPort" : "0",
          "ToPort" : "65535",
          "SourceSecurityGroupId" :  { "Fn::GetAtt": [ "MasterSecurityGroup", "GroupId" ] }
       }
     },
     "MasterSecurityIngress2" : {
       "Type" : "AWS::EC2::SecurityGroupIngress",
-      "DependsOn" : ["MasterSecurityGroup", "WorkerSecurityGroup"],      
+      "DependsOn" : ["MasterSecurityGroup", "WorkerSecurityGroup"],
       "Properties" : {
         "GroupId" : { "Fn::GetAtt": [ "MasterSecurityGroup", "GroupId" ] },
-         "IpProtocol" : "icmp", 
-         "FromPort" : "-1", 
+         "IpProtocol" : "icmp",
+         "FromPort" : "-1",
          "ToPort" : "-1",
          "SourceSecurityGroupId" :  { "Fn::GetAtt": [ "MasterSecurityGroup", "GroupId" ] }
       }
     },
     "MasterSecurityIngress3" : {
       "Type" : "AWS::EC2::SecurityGroupIngress",
-      "DependsOn" : ["MasterSecurityGroup", "WorkerSecurityGroup"],      
+      "DependsOn" : ["MasterSecurityGroup", "WorkerSecurityGroup"],
       "Properties" : {
         "GroupId" : { "Fn::GetAtt": [ "MasterSecurityGroup", "GroupId" ] },
-         "IpProtocol" : "tcp", 
-         "FromPort" : "0", 
+         "IpProtocol" : "tcp",
+         "FromPort" : "0",
          "ToPort" : "65535",
          "SourceSecurityGroupId" :  { "Fn::GetAtt": [ "WorkerSecurityGroup", "GroupId" ] }
       }
-    },    
+    },
     "MasterSecurityIngress4" : {
       "Type" : "AWS::EC2::SecurityGroupIngress",
-      "DependsOn" : ["MasterSecurityGroup", "WorkerSecurityGroup"],      
+      "DependsOn" : ["MasterSecurityGroup", "WorkerSecurityGroup"],
       "Properties" : {
         "GroupId" : { "Fn::GetAtt": [ "MasterSecurityGroup", "GroupId" ] },
-         "IpProtocol" : "icmp", 
-         "FromPort" : "-1", 
+         "IpProtocol" : "icmp",
+         "FromPort" : "-1",
          "ToPort" : "-1",
          "SourceSecurityGroupId" :  { "Fn::GetAtt": [ "WorkerSecurityGroup", "GroupId" ] }
       }
-    },        
+    },
     "WorkerSecurityGroup" : {
       "Type" : "AWS::EC2::SecurityGroup",
       "DependsOn" : ["MasterSecurityGroup"],
@@ -360,7 +367,7 @@
         "VpcId" : { "Ref" : "Vpc" },
           "Tags" : [
             { "Key" : "Name", "Value" : {"Fn::Join" : ["", [{ "Ref" : "AWS::StackName" }, "_Worker"] ]} }
-          ],                 
+          ],
         "SecurityGroupIngress" : [
             { "IpProtocol" : "tcp", "FromPort" : "0", "ToPort" : "65535", "SourceSecurityGroupId" : { "Ref" : "MasterSecurityGroup" } },
             { "IpProtocol" : "icmp", "FromPort" : "-1", "ToPort" : "-1", "SourceSecurityGroupId" : { "Ref" : "MasterSecurityGroup" } }
@@ -371,22 +378,22 @@
     },
     "WorkerSecurityIngress3" : {
       "Type" : "AWS::EC2::SecurityGroupIngress",
-      "DependsOn" : ["WorkerSecurityGroup"],      
+      "DependsOn" : ["WorkerSecurityGroup"],
       "Properties" : {
         "GroupId" : { "Fn::GetAtt": [ "WorkerSecurityGroup", "GroupId" ] },
-         "IpProtocol" : "tcp", 
-         "FromPort" : "0", 
+         "IpProtocol" : "tcp",
+         "FromPort" : "0",
          "ToPort" : "65535",
          "SourceSecurityGroupId" :  { "Fn::GetAtt": [ "WorkerSecurityGroup", "GroupId" ] }
       }
     },
     "WorkerSecurityIngress4" : {
       "Type" : "AWS::EC2::SecurityGroupIngress",
-      "DependsOn" : ["WorkerSecurityGroup"],      
+      "DependsOn" : ["WorkerSecurityGroup"],
       "Properties" : {
         "GroupId" : { "Fn::GetAtt": [ "WorkerSecurityGroup", "GroupId" ] },
-         "IpProtocol" : "icmp", 
-         "FromPort" : "-1", 
+         "IpProtocol" : "icmp",
+         "FromPort" : "-1",
          "ToPort" : "-1",
          "SourceSecurityGroupId" :  { "Fn::GetAtt": [ "WorkerSecurityGroup", "GroupId" ] }
       }
@@ -429,7 +436,7 @@
         "SubnetId" : { "Ref" : "PrivateSubnet" },
         "SecurityGroups": [ { "Ref": "MountTargetSecurityGroup" } ]
       }
-    },    
+    },
     "WorkerLaunchConfig" : {
       "Type" : "AWS::AutoScaling::LaunchConfiguration",
       "Properties" : {
@@ -443,14 +450,14 @@
           "Ref" : "InstanceProfile"
         },
         "SecurityGroups" : [
-          {"Ref" : "WorkerSecurityGroup"} 
+          {"Ref" : "WorkerSecurityGroup"}
         ],
         "UserData" : {
           "Fn::Base64" : {
-            "Fn::Join" : [ "", 
+            "Fn::Join" : [ "",
               [
                 "#!/bin/bash -xe",
-                "\n",                
+                "\n",
 
                 "# setup ssh-forwarding. ",
                 "sed -i \"s/^#\\(\\s\\+\\)ForwardAgent\\(\\s\\+\\)no/\\ \\1ForwardAgent\\2yes/g\" /etc/ssh/ssh_config",
@@ -460,9 +467,8 @@
                 "\n",
 
                 "# run cfn-init. \n",
-                "export CFN_PATH=\\/opt\\/aws\\/bin",
-                "\n",
-                "$CFN_PATH\\/cfn-init -v --region ", { "Ref" : "AWS::Region" },
+                { "Fn::FindInMap" : [ "Other", "CfnPath", {"Ref" : "ImageType" } ]},
+                "\\/cfn-init -v --region ", { "Ref" : "AWS::Region" },
                 " --configsets Setup ",
                 " -s ",
                 { "Ref" : "AWS::StackId" },
@@ -472,7 +478,7 @@
               ]
             ]
           }
-        },               
+        },
         "KeyName" : {
           "Ref" : "KeyName"
         }
@@ -498,16 +504,16 @@
           },
           "download-setup" :{
             "files" : {
-                "/opt/deeplearning/dl_cfn_setup.py":
+                "/opt/deeplearning/dl_cfn_setup_v2.py":
                 { "source" : { "Fn::Join" : [ "", [ {"Fn::FindInMap" : [ "S3", { "Ref" : "AWS::Region" }, "URL" ]}, {"Fn::Join" : ["", [{ "Ref" : "AWS::Region" }, { "Fn::FindInMap" : [ "Other", "S3SourceBucket", "BucketNameSuffix" ]} ] ]}, "/", { "Fn::FindInMap" : [ "Other", "Setup", "Filename" ]} ] ] } }
             }
           },
           "deeplearning-config" : {
             "commands" : {
               "01_setup" : {
-                  "command" : "python /opt/deeplearning/dl_cfn_setup.py | tee -a /var/log/cloud-init-output.log",
+                  "command" : "python /opt/deeplearning/dl_cfn_setup_v2.py | tee -a /var/log/cloud-init-output.log",
                   "cwd" : "/opt/deeplearning",
-                  "env" : { "AWS_DL_NODE_TYPE" : "Worker", 
+                  "env" : { "AWS_DL_NODE_TYPE" : "Worker",
                             "AWS_DL_MASTER_QUEUE": { "Fn::GetAtt" : [ "MasterQueue", "QueueName" ] },
                             "AWS_DL_WORKER_QUEUE": { "Fn::GetAtt" : [ "WorkerQueue", "QueueName" ] },
                             "AWS_DL_WAITCONDITION_TIMEOUT" : { "Fn::FindInMap" : [ "Other", "TimeoutValues", "WaitConditionTimeout" ]},
@@ -517,7 +523,8 @@
                             "AWS_DL_ROLE_NAME" : {"Fn::Join" : ["", [{ "Ref" : "AWS::StackName" }, "-InstanceRole" ] ] },
                             "AWS_DL_DEFAULT_USER" : { "Fn::FindInMap" : [ "Other", "DefaultUser", {"Ref" : "ImageType" } ]},
                             "AWS_REGION" : { "Ref" : "AWS::Region" },
-                            "EFS_MOUNT" : {"Fn::Join" : ["", ["/", { "Ref" : "EFSMountPoint" } ] ] }
+                            "EFS_MOUNT" : {"Fn::Join" : ["", ["/", { "Ref" : "EFSMountPoint" } ] ] },
+                            "CFN_PATH" : { "Fn::FindInMap" : [ "Other", "CfnPath", {"Ref" : "ImageType" } ]}
                   }
               }
             }
@@ -539,12 +546,12 @@
           "Ref" : "InstanceProfile"
         },
         "SecurityGroups" : [
-          { "Ref" : "MasterSecurityGroup" }, 
+          { "Ref" : "MasterSecurityGroup" },
           { "Ref" : "AdminSSHSecurityGroup" }
         ],
         "UserData" : {
           "Fn::Base64" : {
-            "Fn::Join" : [ "", 
+            "Fn::Join" : [ "",
               [
                 "#!/bin/bash -xe",
                 "\n",
@@ -556,9 +563,8 @@
                 "\n",
 
                 "# run cfn-init. \n",
-                "export CFN_PATH=\\/opt\\/aws\\/bin",
-                "\n",
-                "$CFN_PATH\\/cfn-init -v --region ", { "Ref" : "AWS::Region" },
+                { "Fn::FindInMap" : [ "Other", "CfnPath", {"Ref" : "ImageType" } ]},
+                "\\/cfn-init -v --region ", { "Ref" : "AWS::Region" },
                 " --configsets Setup ",
                 " -s ",
                 { "Ref" : "AWS::StackId" },
@@ -568,10 +574,10 @@
               ]
             ]
           }
-        },        
+        },
         "KeyName" : {
           "Ref" : "KeyName"
-        }        
+        }
       },
       "Metadata" : {
         "AWS::CloudFormation::Init" : {
@@ -594,16 +600,16 @@
           },
           "download-setup" :{
             "files" : {
-                "/opt/deeplearning/dl_cfn_setup.py":
+                "/opt/deeplearning/dl_cfn_setup_v2.py":
                 { "source" : { "Fn::Join" : [ "", [ {"Fn::FindInMap" : [ "S3", { "Ref" : "AWS::Region" }, "URL" ]}, {"Fn::Join" : ["", [{ "Ref" : "AWS::Region" }, { "Fn::FindInMap" : [ "Other", "S3SourceBucket", "BucketNameSuffix" ]} ] ]}, "/", { "Fn::FindInMap" : [ "Other", "Setup", "Filename" ]} ] ] } }
             }
           },
           "deeplearning-config" : {
             "commands" : {
               "01_setup" : {
-                  "command" : "python /opt/deeplearning/dl_cfn_setup.py | tee -a /var/log/cloud-init-output.log",
+                  "command" : "python /opt/deeplearning/dl_cfn_setup_v2.py | tee -a /var/log/cloud-init-output.log",
                   "cwd" : "/opt/deeplearning",
-                  "env" : { "AWS_DL_NODE_TYPE" : "Master", 
+                  "env" : { "AWS_DL_NODE_TYPE" : "Master",
                             "AWS_DL_MASTER_QUEUE": { "Fn::GetAtt" : [ "MasterQueue", "QueueName" ] },
                             "AWS_DL_WORKER_QUEUE": { "Fn::GetAtt" : [ "WorkerQueue", "QueueName" ] },
                             "AWS_DL_WAITCONDITION_TIMEOUT" : { "Fn::FindInMap" : [ "Other", "TimeoutValues", "WaitConditionTimeout" ]},
@@ -613,7 +619,8 @@
                             "AWS_DL_ROLE_NAME" : {"Fn::Join" : ["", [{ "Ref" : "AWS::StackName" }, "-InstanceRole" ] ] },
                             "AWS_DL_DEFAULT_USER" : { "Fn::FindInMap" : [ "Other", "DefaultUser", {"Ref" : "ImageType" } ]},
                             "AWS_REGION" : { "Ref" : "AWS::Region" },
-                            "EFS_MOUNT" : {"Fn::Join" : ["", ["/", { "Ref" : "EFSMountPoint" } ] ] }
+                            "EFS_MOUNT" : {"Fn::Join" : ["", ["/", { "Ref" : "EFSMountPoint" } ] ] },
+                            "CFN_PATH" : { "Fn::FindInMap" : [ "Other", "CfnPath", {"Ref" : "ImageType" } ]}
                   }
               }
             }
@@ -687,7 +694,7 @@
           "Key" : "Name",
           "Value" : {
             "Fn::Join" : ["", [{ "Ref" : "AWS::StackName" }, "-Worker" ] ]
-          },          
+          },
           "PropagateAtLaunch" : true
           },
           {
@@ -718,7 +725,7 @@
           {
             "Endpoint" : {
               "Fn::GetAtt" : [ "ResourceMetadataLambdaFunction", "Arn" ]
-            }, "Protocol" : "lambda" 
+            }, "Protocol" : "lambda"
           }
         ],
         "TopicName" : {"Fn::Join" : ["", [{ "Ref" : "AWS::StackName" }, "-aws-dl-cfn" ] ] }
@@ -748,7 +755,7 @@
           "EnableDnsHostnames" : "true",
           "Tags" : [
             { "Key" : "Name", "Value" : { "Ref" : "AWS::StackName" } }
-          ]     
+          ]
       }
     },
     "InternetGateway" : {
@@ -841,7 +848,7 @@
           { "Key" : "Name", "Value" : { "Ref" : "AWS::StackName" }}
         ]
       }
-    },        
+    },
     "PrivateRoute" : {
       "Type" : "AWS::EC2::Route",
       "Properties" : {
@@ -856,7 +863,7 @@
         "SubnetId" : { "Ref" : "PrivateSubnet" },
         "RouteTableId" : { "Ref" : "PrivateRouteTable" }
       }
-    }            
+    }
   },
   "Outputs" : {
     "AdminSSHSecurityGroup" : {
