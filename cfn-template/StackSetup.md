@@ -14,7 +14,7 @@ If you need to scale the number of instances beyond the [default limit](https://
 
 **To launch the stack**:
 
-1. Download the Deep Learning template from the [awslabs/deeplearning-cfn GitHub repo](https://github.com/awslabs/deeplearning-cfn/blob/master/cfn-template/deeplearning.template)
+1. Download the Deep Learning template from the [awslabs/deeplearning-cfn GitHub repo](https://raw.githubusercontent.com/awslabs/deeplearning-cfn/master/cfn-template/deeplearning.template)
 
 2. Open the [AWS CloudFormation console](https://console.aws.amazon.com/cloudformation), and then choose **Create New Stack**.
 ![](../images/Slide1.png)  
