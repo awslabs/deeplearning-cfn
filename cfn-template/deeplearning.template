@@ -114,11 +114,11 @@
       "ap-southeast-2" : { "AMI" : "ami-52332031"  }
     },
     "Ubuntu" : {
-      "us-east-1"      : { "AMI" : "ami-228dbc34"  },
-      "us-east-2"      : { "AMI" : "ami-ca5d7caf"  },
-      "us-west-2"      : { "AMI" : "ami-96796fef"  },
-      "eu-west-1"      : { "AMI" : "ami-cd1ffab4"  },
-      "ap-southeast-2" : { "AMI" : "ami-ef0e1d8c"  }
+      "us-east-1"      : { "AMI" : "ami-2edccb38"  },
+      "us-east-2"      : { "AMI" : "ami-2797b642"  },
+      "us-west-2"      : { "AMI" : "ami-7fd7c906"  },
+      "eu-west-1"      : { "AMI" : "ami-19896660"  },
+      "ap-southeast-2" : { "AMI" : "ami-b32b37d0"  }
     },
     "SubnetConfig" : {
       "VPC"     : { "CIDR" : "10.0.0.0/16" },
