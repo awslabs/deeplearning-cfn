@@ -103,7 +103,7 @@ These steps summarize how to get started. For more information about running dis
 ### Running Distributed Training on TensorFlow 
 The new template introduces [Amazon Elastic File System](https://aws.amazon.com/efs/), which facilitates sharing data among workers, store the checkpoints and the logs of all the TensorFlow processes in one place. You can now monitor all the logs on the master instance.
 
-For the TensorFlow distributed training example, we use the CIFAR-10 model provided by [TensorFlow](https://www.tensorflow.org/tutorials/deep_cnn#cifar-10_model) and the distributed training sample code discussed in [Distributed Tensorflow](https://www.tensorflow.org/versions/master/how_tos/distributed/). 
+For the TensorFlow distributed training example, we use the CIFAR-10 model provided by [TensorFlow](https://www.tensorflow.org/tutorials/deep_cnn#cifar-10_model) and the distributed training sample code discussed in [Distributed Tensorflow](https://www.tensorflow.org/deploy/distributed). 
 
 **Note** This distributed training example is not tuned to achieve the greatest accuracy. It merely
 shows how the deep learning AWS CloudFormation stack simplifies running a distributed TensorFlow training.
