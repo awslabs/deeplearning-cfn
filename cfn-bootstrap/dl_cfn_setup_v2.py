@@ -48,7 +48,7 @@ AWS_DL_DEFAULT_USER = None
 EFS_MOUNT = None
 CFN_PATH = None
 
-AWS_GPU_INSTANCE_TYPES = [ "g2.2xlarge", "g2.8xlarge", "p2.xlarge", "p2.8xlarge", "p2.16xlarge" ]
+AWS_GPU_INSTANCE_TYPES = [ "g3.4xlarge", "g3.8xlarge", "g3.16xlarge", "p2.xlarge", "p2.8xlarge", "p2.16xlarge", "p3.2xlarge", "p3.8xlarge", "p3.16xlarge" ]
 
 '''
 Setup Logger and LogLevel

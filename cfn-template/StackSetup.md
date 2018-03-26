@@ -30,7 +30,7 @@ If you need to scale the number of instances beyond the [default limit](https://
 
 7. Choose an **ImageType**, Amazon Linux or Ubuntu.
 
-8. Choose an **InstanceType**, such as [P2.16xlarge](https://aws.amazon.com/ec2/instance-types/p2/).
+8. Choose an **InstanceType**, such as [p3.2xlarge](https://aws.amazon.com/ec2/instance-types/p3/).
 
 9. For **KeyName**, choose an EC2 key pair.  
 
