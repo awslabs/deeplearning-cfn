@@ -1,6 +1,3 @@
 [submodule "examples/tensorflow/models"]
 	path = examples/tensorflow/models
 	url = https://github.com/tensorflow/models/
-[submodule "examples/mxnet"]
-	path = examples/mxnet
-	url = https://github.com/dmlc/mxnet
