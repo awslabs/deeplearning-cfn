@@ -13,7 +13,7 @@
       "Default" : "1"
     },
     "InstanceType" : {
-      "Description" : "The EC2 instance type for workers.For GPUs choose g2.xx or p2.xx",
+      "Description" : "The EC2 instance type for workers.For GPUs choose g3.xx, p2.xx or p3.xx.",
       "Type" : "String",
       "Default" : "p3.2xlarge",
       "AllowedValues" : [
@@ -23,8 +23,9 @@
         "p3.2xlarge",
         "p3.8xlarge",
         "p3.16xlarge",
-        "g2.8xlarge",
-        "g2.2xlarge",
+        "g3.16xlarge",
+        "g3.8xlarge",
+        "g3.4xlarge",
         "t2.small",
         "t2.medium",
         "t2.large",
@@ -79,7 +80,7 @@
     "ImageType" : {
        "Description" : "Linux Flavor(Amazon Linux or Ubuntu)",
        "Type" : "String",
-       "Default" : "AmazonLinux",
+       "Default" : "Ubuntu",
        "AllowedValues" : [ "AmazonLinux", "Ubuntu" ],
        "ConstraintDescription" : "Amazon Supported Image Type"
      },
@@ -110,28 +111,39 @@
   },
   "Mappings" : {
     "AmazonLinux" : {
-      "us-east-1"      : { "AMI" : "ami-9706e5ea"  },
-      "us-west-2"      : { "AMI" : "ami-dc70ffa4"  },
-      "eu-west-1"      : { "AMI" : "ami-8caad3f5"  },
-      "us-east-2"      : { "AMI" : "ami-f4586f91"  },
-      "ap-southeast-2"      : { "AMI" : "ami-bbd710d9"  },
-      "ap-northeast-1"      : { "AMI" : "ami-5ba3d93d"  },
-      "ap-northeast-2"      : { "AMI" : "ami-d0d67bbe"  },
-      "ap-south-1"      : { "AMI" : "ami-359ec25a"  },
-      "eu-central-1"      : { "AMI" : "ami-ca3351a5"  },
-      "ap-southeast-1"      : { "AMI" : "ami-ded39da2"  }
+      "us-east-1"           : { "AMI" : "ami-07a8025bf6c79b171"  },
+      "us-west-2"           : { "AMI" : "ami-0464a55bace57c2ba"  },
+      "eu-west-1"           : { "AMI" : "ami-065ef4c5569ad0325"  },
+      "us-east-2"           : { "AMI" : "ami-084820056c48a24a1"  },
+      "ap-southeast-2"      : { "AMI" : "ami-0825d29fdcba5643b"  },
+      "ap-northeast-1"      : { "AMI" : "ami-08cd28e8e6f09a795"  },
+      "ap-northeast-2"      : { "AMI" : "ami-0429539c53a06d4f2"  },
+      "ap-south-1"          : { "AMI" : "ami-07ec55882c2130682"  },
+      "eu-central-1"        : { "AMI" : "ami-00a55f81413d1a50b"  },
+      "ap-southeast-1"      : { "AMI" : "ami-08156a26619b07895"  },
+      "sa-east-1"           : { "AMI" : "ami-0ed5b3279e2f4aa25"  },
+      "us-west-1"           : { "AMI" : "ami-0888ba9de262bdae4"  },
+      "ca-central-1"        : { "AMI" : "ami-001dfaa7da43c51b0"  },
+      "eu-west-2"           : { "AMI" : "ami-0d8f60e2b193304b9"  },
+      "eu-west-3"           : { "AMI" : "ami-00feab74e9e161d7e"  }
+
     },
     "Ubuntu" : {
-      "us-east-1"      : { "AMI" : "ami-173bd86a"  },
-      "us-west-2"      : { "AMI" : "ami-5a77f822"  },
-      "eu-west-1"      : { "AMI" : "ami-2fb0c956"  },
-      "us-east-2"      : { "AMI" : "ami-295b6c4c"  },
-      "ap-southeast-2" : { "AMI" : "ami-64d51206"  },
-      "ap-northeast-1" : { "AMI" : "ami-bcafd5da"  },
-      "ap-northeast-2" : { "AMI" : "ami-1ad17c74"  },
-      "ap-south-1" : { "AMI" : "ami-959fc3fa"  },
-      "eu-central-1" : { "AMI" : "ami-3a254755"  },
-      "ap-southeast-1" : { "AMI" : "ami-63d9971f"  }
+      "us-east-1"           : { "AMI" : "ami-0e0e0d5bbfb3508be"  },
+      "us-west-2"           : { "AMI" : "ami-0231c1de0d92fe7a2"  },
+      "eu-west-1"           : { "AMI" : "ami-01a2bad474aa7341e"  },
+      "us-east-2"           : { "AMI" : "ami-005093033bfe142a4"  },
+      "ap-southeast-2"      : { "AMI" : "ami-001d80d4beb28a975"  },
+      "ap-northeast-1"      : { "AMI" : "ami-0cae2c2d7c4ae9e5a"  },
+      "ap-northeast-2"      : { "AMI" : "ami-08f8fd287d60b5c6d"  },
+      "ap-south-1"          : { "AMI" : "ami-036af9ebeeeb45f39"  },
+      "eu-central-1"        : { "AMI" : "ami-088832fd13580f7e7"  },
+      "ap-southeast-1"      : { "AMI" : "ami-06440b0c27fd930f7"  },
+      "sa-east-1"           : { "AMI" : "ami-010a9a1fb085fd7a1"  },
+      "us-west-1"           : { "AMI" : "ami-08e1dc8f948dfcdca"  },
+      "ca-central-1"        : { "AMI" : "ami-06d5bb0ad70ab78c9"  },
+      "eu-west-2"           : { "AMI" : "ami-04c6c798632f48a1f"  },
+      "eu-west-3"           : { "AMI" : "ami-0e4eedd34c3254c28"  }
     },
     "SubnetConfig" : {
       "VPC"     : { "CIDR" : "10.0.0.0/16" },
@@ -139,16 +151,21 @@
       "Private" : { "CIDR" : "10.0.1.0/24" }
     },
     "S3" : {
-      "us-east-1"      : { "URL" : "https://s3.amazonaws.com/" },
-      "us-west-2"      : { "URL" : "https://s3-us-west-2.amazonaws.com/" },
-      "eu-west-1"      : { "URL" : "https://s3-eu-west-1.amazonaws.com/" },
-      "us-east-2"      : { "URL" : "https://s3-us-east-2.amazonaws.com/" },
-      "ap-southeast-2" : { "URL" : "https://s3-ap-southeast-2.amazonaws.com/" },
-      "ap-northeast-1" : { "URL" : "https://s3-ap-northeast-1.amazonaws.com/" },
-      "ap-northeast-2" : { "URL" : "https://s3-ap-northeast-2.amazonaws.com/" },
-      "ap-south-1" : { "URL" : "https://s3-ap-south-1.amazonaws.com/" },
-      "eu-central-1" : { "URL" : "https://s3-eu-central-1.amazonaws.com/" },
-      "ap-southeast-1" : { "URL" : "https://s3-ap-southeast-1.amazonaws.com/" }
+      "us-east-1"           : { "URL" : "https://s3.amazonaws.com/" },
+      "us-west-2"           : { "URL" : "https://s3-us-west-2.amazonaws.com/" },
+      "eu-west-1"           : { "URL" : "https://s3-eu-west-1.amazonaws.com/" },
+      "us-east-2"           : { "URL" : "https://s3-us-east-2.amazonaws.com/" },
+      "ap-southeast-2"      : { "URL" : "https://s3-ap-southeast-2.amazonaws.com/" },
+      "ap-northeast-1"      : { "URL" : "https://s3-ap-northeast-1.amazonaws.com/" },
+      "ap-northeast-2"      : { "URL" : "https://s3-ap-northeast-2.amazonaws.com/" },
+      "ap-south-1"          : { "URL" : "https://s3-ap-south-1.amazonaws.com/" },
+      "eu-central-1"        : { "URL" : "https://s3-eu-central-1.amazonaws.com/" },
+      "ap-southeast-1"      : { "URL" : "https://s3-ap-southeast-1.amazonaws.com/" },
+      "sa-east-1"           : { "URL" : "https://s3-sa-east-1.amazonaws.com/"  },
+      "us-west-1"           : { "URL" : "https://s3-us-west-1.amazonaws.com/"  },
+      "ca-central-1"        : { "URL" : "https://s3-ca-central-1.amazonaws.com/"  },
+      "eu-west-2"           : { "URL" : "https://s3-eu-west-2.amazonaws.com/"  },
+      "eu-west-3"           : { "URL" : "https://s3-eu-west-3.amazonaws.com/"  }
     },
     "Other" : {
       "S3SourceBucket" : { "BucketNameSuffix" : "-aws-dl-cfn" },
