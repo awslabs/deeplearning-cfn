@@ -1,6 +1,6 @@
 [submodule "examples/tensorflow/models"]
 	path = examples/tensorflow/models
 	url = https://github.com/tensorflow/models/
-[submodule "examples/mxnet"]
-	path = examples/mxnet
-	url = https://github.com/dmlc/mxnet
+[submodule "examples/incubator-mxnet"]
+	path = examples/incubator-mxnet
+	url = https://github.com/apache/incubator-mxnet
