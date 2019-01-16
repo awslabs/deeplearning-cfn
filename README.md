@@ -1,4 +1,6 @@
 
+
+
 # **Distributed Deep Learning on AWS Using MXNet and TensorFlow**
 
 [AWS CloudFormation](https://aws.amazon.com/cloudformation), which creates and configures Amazon Web Services resources with a template, simplifies the process of setting up a distributed deep learning cluster. The AWS CloudFormation Deep Learning template uses the [Amazon Deep Learning AMI](https://aws.amazon.com/marketplace/pp/B01M0AXXQB) (which provides MXNet, TensorFlow, Caffe, Theano, Torch, and CNTK frameworks) to launch a cluster of [EC2](https://aws.amazon.com/ec2) instances and other AWS resources needed to perform distributed deep learning.  
@@ -7,14 +9,18 @@ With this template, we continue with our mission to make [distributed deep learn
 ## What's New?  
 We've updated the AWS CloudFormation Deep Learning template to add some exciting new features and capabilities.
 
+### Dec 19 2018
+* Updated AWS DLAMI Conda version in CFN template file to v20.0. Check **[release notes](https://aws.amazon.com/releasenotes/?tag=releasenotes%23keywords%23aws-deep-learning-amis)** for details.
+* Updated instructions to use tensorflow with horovod for distributed training.
+
 ### Nov 7 2018
-* Introduce AWS DLAMI Conda v16.0 - For developers who want pre-installed pip packages of deep learning frameworks in separate virtual environments, the Conda-based AMI is available in **[Ubuntu](https://aws.amazon.com/marketplace/pp/B077GCH38C),**  **[Amazon Linux](https://aws.amazon.com/marketplace/pp/B077GF11NF)** and **[Windows 2016](https://aws.amazon.com/marketplace/pp/B077Y5DJ8H?qid=1517601174147&sr=0-1&ref_=srh_res_product_title)** versions. Check [AWS DLAMI Official webpage](https://aws.amazon.com/machine-learning/amis/) for more details.
+* Introduce AWS DLAMI Conda v16.0 - For developers who want pre-installed pip packages of deep learning frameworks in separate virtual environments, the Conda-based AMI is available in **[Ubuntu](https://aws.amazon.com/marketplace/pp/B077GCH38C)** and  **[Amazon Linux](https://aws.amazon.com/marketplace/pp/B077GF11NF)**. Check [AWS DLAMI Official webpage](https://aws.amazon.com/machine-learning/amis/) for more details.
 
 * We now support 11 AWS regions- us-east-1, us-west-2, eu-west-1, us-east-2, ap-southeast-2, ap-northeast-1, ap-northeast-2, ap-south-1, eu-central-1,ap-southeast-1, us-west-1.
 
 * We now support g3 and c5 instances, and remove g2 instances.
 
-* Update MXNet submodule to enjoy latest MXNet benefits.  
+* Update MXNet submodule to 1.3.0.
 
 
 
@@ -126,67 +132,22 @@ We were able to run the training for 100 epochs in 25 minutes on 2 P2.8x EC2 ins
 
 These steps summarize how to get started. For more information about running distributed training on MXNet, see [Run MXNet on Multiple Devices](http://mxnet.readthedocs.io/en/latest/how_to/multi_devices.html).
 
-### Running Distributed Training on TensorFlow
-The new template introduces [Amazon Elastic File System](https://aws.amazon.com/efs/), which facilitates sharing data among workers, store the checkpoints and the logs of all the TensorFlow processes in one place. You can now monitor all the logs on the master instance.
+### Running Distributed Training on TensorFlow with Horovod
+Horovod is a distributed training framework to make distributed deep learning easy and fast. You can get more information about the advantages of using [Horovod](https://github.com/uber/horovod) to do distributed training with Tensorflow or other framework.
+Starting from DLAMI Conda v19.0, it comes with example pre-configured scripts to show how you can train model with Tensorflow and Horovod on multi gpus/machines.
 
-For the TensorFlow distributed training example, we use the CIFAR-10 model provided by [TensorFlow](https://www.tensorflow.org/tutorials/deep_cnn#cifar-10_model) and the distributed training sample code discussed in [Distributed Tensorflow](https://www.tensorflow.org/deploy/distributed).
+The following example shows how to train a ResNet-50 model with synthetic data.
 
-**Note** This distributed training example is not tuned to achieve the greatest accuracy. It merely
-shows how the deep learning AWS CloudFormation stack simplifies running a distributed TensorFlow training.
+    cd ~/examples/horovod/tensorflow
+    vi hosts
 
-Download the CIFAR-10 dataset from [Alex Krizhevsky's page](http://www.cs.toronto.edu/~kriz/cifar-10-binary.tar.gz)
-and unzip the tar.gz file onto the EFS mount so you don't have to copy or download the dataset on all of the workers.
+You should be able to see `localhost slots=8` in your hosts file. The number of slots means how many GPUs you want to use in that machine to train your model. Also, you should append your worker nodes to the hosts file, and assign GPU number to it. To know how many GPUs available in your instance, run `nvidia-smi`. After the change, your hosts file should look like
+```
+localhost slots=<#GPUs>
+<worker node private ip>=<#GPUs>
+......
+```
+You can easily calculate the number of GPUs you'll use to train the model by summing up the slots available on each machine. Note that: the argument passed to the train_synthetic.sh script below is passed to -np parameter of mpirun. The -np argument represents the total number of processes and the slots argument in hostfile represents the split of those processes per machine.
 
-    mkdir $EFS_MOUNT/cifar10_data && \
-    wget http://www.cs.toronto.edu/~kriz/cifar-10-binary.tar.gz --directory-prefix=$EFS_MOUNT/cifar10_data \
-    && tar -xzvf $EFS_MOUNT/cifar10_data/cifar-10-binary.tar.gz -C $EFS_MOUNT/cifar10_data
-
-We have included a script in the [awslabs/deeplearning-cfn](https://github.com/awslabs/deeplearning-cfn/blob/master/examples/tensorflow/generate_trainer.py) repo that generates the commands to run the tensorflow workers and parameter servers on the instances. The script takes training_script as an argument, you can also pass the arguments that are needed by your distributed training script as additional arguments.
-
-    cd $EFS_MOUNT/deeplearning-cfn/examples/tensorflow && \
-    # generates commands to run workers and parameter-servers on all the workers \
-    python generate_trainer.py --workers_file_path $DEEPLEARNING_WORKERS_PATH \
-    --worker_count $DEEPLEARNING_WORKERS_COUNT \
-    --worker_gpu_count $DEEPLEARNING_WORKER_GPU_COUNT \
-    --trainer_script_dir $EFS_MOUNT/deeplearning-cfn/examples/tensorflow \
-    --training_script $EFS_MOUNT/deeplearning-cfn/examples/tensorflow/cifar10_multi_machine_train.py \
-    --batch_size 128 --data_dir=$EFS_MOUNT/cifar10_data \
-    --train_dir=$EFS_MOUNT/deeplearning-cfn/examples/tensorflow/train \
-    --log_dir $EFS_MOUNT/deeplearning-cfn/examples/tensorflow/logs \
-    --max_steps 200000
-
-Stop all of the Python processes that might be running on the workers:
-
-    #terminate all running Python processes across workers \
-    while read -u 10 host; do ssh -o "StrictHostKeyChecking no" $host "pkill -f python" ; \
-    done 10<$DEEPLEARNING_WORKERS_PATH
-
-Run the distributed training across all of the workers:
-
-    trainer_script_dir=$EFS_MOUNT/deeplearning-cfn/examples/tensorflow && while read -u 10 host; \
-    do ssh -o "StrictHostKeyChecking no" $host "bash $trainer_script_dir/$host.sh" ; \
-    done 10<$DEEPLEARNING_WORKERS_PATH
-
-Because the logs of all of the workers and the process status processes are stored on Amazon EFS, you can now monitor them on the master:
-
-    tail -f $EFS_MOUNT/deeplearning-cfn/examples/tensorflow/logs/*
-
-We were able train this model in an hour on 2 P2.8x EC2 instances running 2 process status processes and 16 worker processes for 200000 steps and reduce the loss to 0.82 averaged across the 16 workers.
-
-Running the evaluation script on the trained model achieves an accuracy of 77%:
-
-    python $EFS_MOUNT/deeplearning-cfn/examples/tensorflow/models/tutorials/image/cifar10/cifar10_eval.py \
-    --data_dir=$EFS_MOUNT/cifar10_data/ \
-    --eval_dir=$EFS_MOUNT/deeplearning-cfn/examples/tensorflow/eval \
-    --checkpoint_dir=$EFS_MOUNT/deeplearning-cfn/examples/tensorflow/train
-
-You can visualize the training on [TensorBoard](https://www.tensorflow.org/get_started/summaries_and_tensorboard) by running the following command on the master node. TensorBoard starts running on the private IP address of the master instance and port 6006. Make a note of this IP address because you will use it in the next command.
-
-    tensorboard --logdir $EFS_MOUNT/deeplearning-cfn/examples/tensorflow/train
-
-Now use SSH port forwarding to see TensorBoard on your local computer. Run a command similar to the following on the local computer. (This uses SSH agent forwarding for credentials.)
-
-    #In this example, 192.0.2.0 is the private IP of the master and 203.0.113.0 is the public ip of the master instance, ec2-user is the userid of the master if Instance Type is Amazon Linux
-    ssh -l ec2-user -L 6006:192.0.2.0:6006 203.0.113.0
-
-To see TensorBoard, open [http://localhost:6006](http://localhost:6006) on a browser. For more information, see [TensorBoard: Visualizing Learning](https://www.tensorflow.org/get_started/summaries_and_tensorboard).
+Then, just  run
+`./train_synthetic.sh 24`  or replace 24 with number of GPUs you use. 
