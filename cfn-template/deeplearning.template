@@ -111,31 +111,31 @@
   },
   "Mappings" : {
     "AmazonLinux" : {
-      "us-east-1"           : { "AMI" : "ami-0f5788229b53809c9"  },
-      "us-west-2"           : { "AMI" : "ami-0c0c1a8d6a4695fdc"  },
-      "eu-west-1"           : { "AMI" : "ami-088b2e2cc2498f3ca"  },
-      "us-east-2"           : { "AMI" : "ami-001f9c1ca57fbc7a2"  },
-      "ap-southeast-2"      : { "AMI" : "ami-02c907307d02dc462"  },
-      "ap-northeast-1"      : { "AMI" : "ami-08a7740ff4d3fd90f"  },
-      "ap-northeast-2"      : { "AMI" : "ami-07b22a7626892dd48"  },
-      "ap-south-1"          : { "AMI" : "ami-074811debc0b11bdf"  },
-      "eu-central-1"        : { "AMI" : "ami-055ab192b68ca4d2f"  },
-      "ap-southeast-1"      : { "AMI" : "ami-044c38d8c0100ea15"  },
-      "us-west-1"           : { "AMI" : "ami-0351f8fc8044b3dea"  }
+      "us-east-1"           : { "AMI" : "ami-087379093eeda94ae"  },
+      "us-west-2"           : { "AMI" : "ami-060f1e7b74b27ee67"  },
+      "eu-west-1"           : { "AMI" : "ami-00822a35afa569253"  },
+      "us-east-2"           : { "AMI" : "ami-0a06156dfe1431263"  },
+      "ap-southeast-2"      : { "AMI" : "ami-0515ea78aad8ea686"  },
+      "ap-northeast-1"      : { "AMI" : "ami-005014c3a04c47806"  },
+      "ap-northeast-2"      : { "AMI" : "ami-0fe3eaf8794eb0d3b"  },
+      "ap-south-1"          : { "AMI" : "ami-0d7c4d21157d329b2"  },
+      "eu-central-1"        : { "AMI" : "ami-06ae1bbcb7042c6c6"  },
+      "ap-southeast-1"      : { "AMI" : "ami-00df391eb41e2afbd"  },
+      "us-west-1"           : { "AMI" : "ami-0ab9d3de3c0467d0c"  }
 
     },
     "Ubuntu" : {
-      "us-east-1"           : { "AMI" : "ami-09a706a24845d0723"  },
-      "us-west-2"           : { "AMI" : "ami-0b294f219d14e6a82"  },
-      "eu-west-1"           : { "AMI" : "ami-086062166ec8340ac"  },
-      "us-east-2"           : { "AMI" : "ami-003ce277a8a9c0014"  },
-      "ap-southeast-2"      : { "AMI" : "ami-0512a7cd86ea45901"  },
-      "ap-northeast-1"      : { "AMI" : "ami-07a65197e224510c7"  },
-      "ap-northeast-2"      : { "AMI" : "ami-098cb0cca04bdac5a"  },
-      "ap-south-1"          : { "AMI" : "ami-01e5f909b3c234383"  },
-      "eu-central-1"        : { "AMI" : "ami-0f57552c8fc9e228f"  },
-      "ap-southeast-1"      : { "AMI" : "ami-077b987c8b7a6462e"  },
-      "us-west-1"           : { "AMI" : "ami-0f4a47e4242cb9816"  }
+      "us-east-1"           : { "AMI" : "ami-0d96d570269578cd7"  },
+      "us-west-2"           : { "AMI" : "ami-0027dfad6168539c7"  },
+      "eu-west-1"           : { "AMI" : "ami-0e9085a8d461c2d01"  },
+      "us-east-2"           : { "AMI" : "ami-0a47106e391391252"  },
+      "ap-southeast-2"      : { "AMI" : "ami-048c002ab05a657b9"  },
+      "ap-northeast-1"      : { "AMI" : "ami-0812aef741b2ca3c2"  },
+      "ap-northeast-2"      : { "AMI" : "ami-0cc8a10d4b729c065"  },
+      "ap-south-1"          : { "AMI" : "ami-0556cfc195004ba96"  },
+      "eu-central-1"        : { "AMI" : "ami-002b6c63ff04afa5f"  },
+      "ap-southeast-1"      : { "AMI" : "ami-01c5a0f3151202f36"  },
+      "us-west-1"           : { "AMI" : "ami-0f627d6558d18ecfa"  }
     },
     "SubnetConfig" : {
       "VPC"     : { "CIDR" : "10.0.0.0/16" },

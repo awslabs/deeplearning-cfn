@@ -144,7 +144,7 @@ The following example shows how to train a ResNet-50 model with synthetic data.
 You should be able to see `localhost slots=8` in your hosts file. The number of slots means how many GPUs you want to use in that machine to train your model. Also, you should append your worker nodes to the hosts file, and assign GPU number to it. To know how many GPUs available in your instance, run `nvidia-smi`. After the change, your hosts file should look like
 ```
 localhost slots=<#GPUs>
-<worker node private ip>=<#GPUs>
+<worker node private ip> slots=<#GPUs>
 ......
 ```
 You can easily calculate the number of GPUs you'll use to train the model by summing up the slots available on each machine. Note that: the argument passed to the train_synthetic.sh script below is passed to -np parameter of mpirun. The -np argument represents the total number of processes and the slots argument in hostfile represents the split of those processes per machine.
