@@ -9,6 +9,10 @@ With this template, we continue with our mission to make [distributed deep learn
 ## What's New?  
 We've updated the AWS CloudFormation Deep Learning template to add some exciting new features and capabilities.
 
+### April 30 2019
+* Add Support to Amazon Linux 2. Check **[product overview](https://aws.amazon.com/marketplace/pp/B07NMRZ36T)** for details.
+* Updated AWS DLAMI Conda version in CFN template file to v22.0 **[release notes](https://aws.amazon.com/releasenotes/?tag=releasenotes%23keywords%23aws-deep-learning-amis)** for details.
+
 ### Feb 12 2019
 * Updated AWS DLAMI Conda version in CFN template file to v21.2. Check **[release notes](https://aws.amazon.com/releasenotes/?tag=releasenotes%23keywords%23aws-deep-learning-amis)** for details.
 
@@ -153,4 +157,4 @@ localhost slots=<#GPUs>
 You can easily calculate the number of GPUs you'll use to train the model by summing up the slots available on each machine. Note that: the argument passed to the train_synthetic.sh script below is passed to -np parameter of mpirun. The -np argument represents the total number of processes and the slots argument in hostfile represents the split of those processes per machine.
 
 Then, just  run
-`./train_synthetic.sh 24`  or replace 24 with number of GPUs you use. 
+`./train_synthetic.sh 24`  or replace 24 with number of GPUs you use.

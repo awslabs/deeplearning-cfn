@@ -81,7 +81,7 @@
        "Description" : "Linux Flavor(Amazon Linux or Ubuntu)",
        "Type" : "String",
        "Default" : "Ubuntu",
-       "AllowedValues" : [ "AmazonLinux", "Ubuntu" ],
+       "AllowedValues" : [ "AmazonLinux", "Ubuntu", "AmazonLinux2" ],
        "ConstraintDescription" : "Amazon Supported Image Type"
      },
     "SSHLocation": {
@@ -111,31 +111,43 @@
   },
   "Mappings" : {
     "AmazonLinux" : {
-      "us-east-1"           : { "AMI" : "ami-087379093eeda94ae"  },
-      "us-west-2"           : { "AMI" : "ami-060f1e7b74b27ee67"  },
-      "eu-west-1"           : { "AMI" : "ami-00822a35afa569253"  },
-      "us-east-2"           : { "AMI" : "ami-0a06156dfe1431263"  },
-      "ap-southeast-2"      : { "AMI" : "ami-0515ea78aad8ea686"  },
-      "ap-northeast-1"      : { "AMI" : "ami-005014c3a04c47806"  },
-      "ap-northeast-2"      : { "AMI" : "ami-0fe3eaf8794eb0d3b"  },
-      "ap-south-1"          : { "AMI" : "ami-0d7c4d21157d329b2"  },
-      "eu-central-1"        : { "AMI" : "ami-06ae1bbcb7042c6c6"  },
-      "ap-southeast-1"      : { "AMI" : "ami-00df391eb41e2afbd"  },
-      "us-west-1"           : { "AMI" : "ami-0ab9d3de3c0467d0c"  }
-
+      "us-east-1"           : { "AMI" : "ami-01ac4e28da63bac3c"  },
+      "us-west-2"           : { "AMI" : "ami-0283132d7b60d70b9"  },
+      "eu-west-1"           : { "AMI" : "ami-02273e0d16172dbd1"  },
+      "us-east-2"           : { "AMI" : "ami-0a13ab27aa8e0e92a"  },
+      "ap-southeast-2"      : { "AMI" : "ami-0d8871bd28572a30f"  },
+      "ap-northeast-1"      : { "AMI" : "ami-0e102072c84e36eed"  },
+      "ap-northeast-2"      : { "AMI" : "ami-078afb8923fdf1d94"  },
+      "ap-south-1"          : { "AMI" : "ami-0a42d8f3e62d459a1"  },
+      "eu-central-1"        : { "AMI" : "ami-0e6ef68b560a74b6e"  },
+      "ap-southeast-1"      : { "AMI" : "ami-0e1a806748fdd00f9"  },
+      "us-west-1"           : { "AMI" : "ami-01bd1a12fc9b048ab"  }
     },
     "Ubuntu" : {
-      "us-east-1"           : { "AMI" : "ami-0d96d570269578cd7"  },
-      "us-west-2"           : { "AMI" : "ami-0027dfad6168539c7"  },
-      "eu-west-1"           : { "AMI" : "ami-0e9085a8d461c2d01"  },
-      "us-east-2"           : { "AMI" : "ami-0a47106e391391252"  },
-      "ap-southeast-2"      : { "AMI" : "ami-048c002ab05a657b9"  },
-      "ap-northeast-1"      : { "AMI" : "ami-0812aef741b2ca3c2"  },
-      "ap-northeast-2"      : { "AMI" : "ami-0cc8a10d4b729c065"  },
-      "ap-south-1"          : { "AMI" : "ami-0556cfc195004ba96"  },
-      "eu-central-1"        : { "AMI" : "ami-002b6c63ff04afa5f"  },
-      "ap-southeast-1"      : { "AMI" : "ami-01c5a0f3151202f36"  },
-      "us-west-1"           : { "AMI" : "ami-0f627d6558d18ecfa"  }
+      "us-east-1"           : { "AMI" : "ami-060865e8b5914b4c4"  },
+      "us-west-2"           : { "AMI" : "ami-01a4e5be5f289dd12"  },
+      "eu-west-1"           : { "AMI" : "ami-07c7a309b70bc57f8"  },
+      "us-east-2"           : { "AMI" : "ami-0174e69c12bae5410"  },
+      "ap-southeast-2"      : { "AMI" : "ami-03ada79c8eab0ce22"  },
+      "ap-northeast-1"      : { "AMI" : "ami-06868a6ddab784c28"  },
+      "ap-northeast-2"      : { "AMI" : "ami-040a89d1ca6eeac15"  },
+      "ap-south-1"          : { "AMI" : "ami-04b5e0d8e4ab95895"  },
+      "eu-central-1"        : { "AMI" : "ami-0e7dbbb968386b24d"  },
+      "ap-southeast-1"      : { "AMI" : "ami-03035662b21d4e722"  },
+      "us-west-1"           : { "AMI" : "ami-0656a055aec8320d6"  }
+    },
+    "AmazonLinux2": {
+      "us-east-1"           : { "AMI" : "ami-02691eea9fd224ffd"  },
+      "us-west-2"           : { "AMI" : "ami-06bdfaa331e004078"  },
+      "eu-west-1"           : { "AMI" : "ami-0699c276e99d52850"  },
+      "us-east-2"           : { "AMI" : "ami-01a86d332cedd806c"  },
+      "ap-southeast-2"      : { "AMI" : "ami-0e2a8a12b389521cb"  },
+      "ap-northeast-1"      : { "AMI" : "ami-04ec0c93f56fbf8bf"  },
+      "ap-northeast-2"      : { "AMI" : "ami-08d3fd36f6235de49"  },
+      "ap-south-1"          : { "AMI" : "ami-0bd9eb7ab6a3abd0e"  },
+      "eu-central-1"        : { "AMI" : "ami-0f5826974ceb854f5"  },
+      "ap-southeast-1"      : { "AMI" : "ami-0156896a55131c03b"  },
+      "us-west-1"           : { "AMI" : "ami-0735b71b971096517"  }
     },
     "SubnetConfig" : {
       "VPC"     : { "CIDR" : "10.0.0.0/16" },
@@ -160,8 +172,8 @@
       "Setup" : { "Filename" : "dl_cfn_setup_v2.py" },
       "LambdaFunction" : { "FileName": "dl_cfn_setup_lambda.zip" },
       "TimeoutValues" : { "WaitConditionTimeout" : "3300", "MasterLaunchTimeout" : "600"},
-      "DefaultUser" : {"AmazonLinux": "ec2-user", "Ubuntu": "ubuntu"},
-      "CfnPath" : {"AmazonLinux": "/opt/aws/bin", "Ubuntu": "/usr/local/bin"}
+      "DefaultUser" : {"AmazonLinux": "ec2-user", "Ubuntu": "ubuntu", "AmazonLinux2": "ec2-user"},
+      "CfnPath" : {"AmazonLinux": "/opt/aws/bin", "Ubuntu": "/usr/local/bin", "AmazonLinux2": "/opt/aws/bin"}
     }
   },
   "Resources" : {
@@ -512,7 +524,7 @@
           "efs-config" : {
               "commands" : {
                 "00_install_nfs" : {
-                  "command" : {"Fn::Join" : [ "", [      "if [ \"AmazonLinux\" = \"", { "Ref" : "ImageType" }, "\" ];", "then yum -y -q install nfs-utils; else apt-get -qq -y install nfs-common ; fi"     ]]}
+                  "command" : {"Fn::Join" : [ "", [      "if [ \"AmazonLinux\" = \"", { "Ref" : "ImageType" }, "\" ] ", "||", " [ \"AmazonLinux2\" = \"", { "Ref" : "ImageType" }, "\" ];", "then yum -y -q install nfs-utils; else apt-get -qq -y install nfs-common ; fi"     ]]}
                 },
                 "01_createdir" : {
                   "command" : {"Fn::Join" : [ "", [ "mkdir -p /", { "Ref" : "EFSMountPoint" }]]}
