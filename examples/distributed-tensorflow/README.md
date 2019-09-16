@@ -11,8 +11,6 @@
 
 ## Create Amazon Deep-Learning AMI Cluster
 
-[Amazon Deep Learning AMIs](https://aws.amazon.com/machine-learning/amis/) are an easy way for developers to launch AWS EC2 instances for machine-learning with many of the commonly used frameworks. Our goal in this project is to create a multi-machine cluster of EC2 instances using Amazon Deep Learning AMI. This [blog](https://aws.amazon.com/blogs/compute/distributed-deep-learning-made-easy/) is a general background reference for what we are trying to accomplish. In our setup, we are focused on distributed training using [TensorFlow](https://github.com/tensorflow/tensorflow), [TensorPack](https://github.com/tensorpack/tensorpack) and [Horovod](https://eng.uber.com/horovod/), so we will be using our own [CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html) template, mask-rcnn-cfn.yaml, included in this project.
-
 The overall solution discussed here can be used to execute any distributed TensorFlow algorithm. However, we will try to be concrete and focus on [TensorPack Mask/Faster-RCNN](https://github.com/tensorpack/tensorpack/tree/master/examples/FasterRCNN) example. 
 
 ## TensorPack Mask/Faster-RCNN Example
@@ -47,9 +45,9 @@ Specifically, our goal is to do distributed training for TensorPack Mask/Faster-
 
    Execute: ```./mask-rcnn-stack.sh```. 
 
-   The output of executing the script is a [CloudFormation Stack](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacks.html) ID.
+   The output of executing the script is a [CloudFormation Stack](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacks.html) ID and progress report of stack creation.
 
-3.  Check status of CloudFormation Stack you created in AWS management console. When stack status is CREATE_COMPLETE, proceed to next step.
+3. When stack status is CREATE_COMPLETE, proceed to next step.
 
 4. On your desktop  execute:
 ```ssh-add <private key file>```
@@ -82,19 +80,11 @@ Also, as part of creating the stack, an EFS file-system is automatically created
 
 You may need to use an existing private VPC. In this case, customize S3_BUCKET, VPC_ID, SUBNET_ID, SSH_LOCATION and KEY_NAME variables in ```private-mask-rcnn-stack.sh``` script. Make sure the route table associated with your selected subnet inside your private VPC uses a NAT Gateway to route to the Internet and uses a VPC Endpoint Gateway to route to S3. Execute: ```./private-mask-rcnn-stack.sh```.
 
-The output of executing the script is a [CloudFormation Stack](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacks.html) ID.
-
-#### OS and Framework Versions
-
-The Deep Learning AMI version used in Cloud Formation templates is version 21. TensorPack is not included in the AMI. Instead, it is packaged in a Tar file and staged in an S3 bucket as part of Step 1 noted under Quick Start Steps above.
-
-You may experiment with different versions of Amazon Deep Learning AMIs. 
+The output of executing the script is a [CloudFormation Stack](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacks.html) ID and progress report of stack creation. 
 
 #### Cluster Health and Node Failure Resilience
 
 Distributed machine-learning in general and this specific setup are not automatically resilient to any node failure. If any node fails, the easiest thing to do is to delete the stack and create a new stack reusing existing EFS file-system. Modify run.sh to restart training from a saved model checkpoint.
-
-You can use the provided ```cluster-health-check.sh``` shell script to determine cluster health.
 
 #### SSH_LOCATION, KEY_NAME Variables
 SSH_LOCATION variable used in mask-rcnn-stack.sh defines the allowed source CIDR for connecting to the cluster Master node using SSH. This CIDR is used to define Master node SSH [security group](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html) incoming instance level network seucrity rules. You can modify the security group after the creation of the cluster, but at least one CIDR at cluster creation time is required. The default value of this variable allows access from any location, which is not recommended practice, so you are advised to change it to your specific CIDR.
