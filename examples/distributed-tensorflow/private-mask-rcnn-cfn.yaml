@@ -220,46 +220,46 @@ Conditions:
 Mappings:
   Ubuntu:
     us-east-1:
-      AMI: ami-0da5089baf511b65f
+      AMI: ami-025ed45832b817a35
     us-east-2:
-      AMI: ami-0bd0eb312b384fbf0 
+      AMI: ami-0e30cdd8359d89531 
     us-west-2:
-      AMI: ami-04c7f6eb97b44200a 
+      AMI: ami-07728e9e2742b0662 
     eu-west-1:
-      AMI: ami-06f483a626f873983 
+      AMI: ami-078d068af898f9114 
     eu-central-1:
-      AMI: ami-07f6e5544a1e9519d 
+      AMI: ami-089c6ba0a6e0e7241 
     ap-southeast-1:
-      AMI: ami-02b27a073c4c1185a 
+      AMI: ami-006124de1c99607fd 
     ap-southeast-2:
-      AMI: ami-0f3691de8a64b4f59 
+      AMI: ami-08ec67632a3be867b 
     ap-south-1:
-      AMI: ami-060245f7db2e15478 
+      AMI: ami-03aa5b53da3a8f3a5 
     ap-northeast-1:
-      AMI: ami-0e561552b0af89fb3 
+      AMI: ami-039d0c16bef5e0155 
     ap-northeast-2:
-      AMI: ami-00ba4cbabab783134 
+      AMI: ami-099a57eaf71294a34 
   AmazonLinux:
     us-east-1:
-      AMI: ami-00b484909a9bacd9f 
+      AMI: ami-02bd97932dabc037b 
     us-east-2:
-      AMI: ami-03670c2f79d09e4f5 
+      AMI: ami-00922dc6518dad1d9 
     us-west-2:
-      AMI: ami-05fc4809d75d5e4d7 
+      AMI: ami-00da9ade5fa7b8a23 
     eu-west-1:
-      AMI: ami-0c24b43903f18dba3 
+      AMI: ami-049c9ed0eb7c5df0b 
     eu-central-1:
-      AMI: ami-0ce62d38b019a19de 
+      AMI: ami-058f6bfe15b3c9624 
     ap-southeast-1:
-      AMI: ami-01347675719a240fe 
+      AMI: ami-07b1a196227f36603 
     ap-southeast-2:
-      AMI: ami-05f962edaa876c658
+      AMI: ami-0f15fae27825ac282
     ap-south-1:
-      AMI: ami-0cabd6d5c247d76b1 
+      AMI: ami-082a3ef32d3851a0b 
     ap-northeast-1:
-      AMI: ami-099a105d96ba2c05b 
+      AMI: ami-07663a5b4e31e9963 
     ap-northeast-2:
-      AMI: ami-0b7c814f45c5dbcf2 
+      AMI: ami-0c71241962531d095 
   S3:
     us-east-1:
       URL: 'https://s3.amazonaws.com/'
