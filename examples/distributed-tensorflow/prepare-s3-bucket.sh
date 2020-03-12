@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 # Customize S3_BUCKET
 S3_BUCKET=
 
@@ -37,14 +39,12 @@ tar -cvf $STAGE_DIR/coco-2017.tar --directory $STAGE_DIR data
 aws s3 cp $STAGE_DIR/coco-2017.tar s3://$S3_BUCKET/$S3_PREFIX/coco-2017.tar
 
 git clone https://github.com/tensorpack/tensorpack.git $STAGE_DIR/tensorpack
-cd $STAGE_DIR/tensorpack && git fetch origin 26664c3f1d58ae029ea6c3ba0af6ae11900b1e55 
-cd $STAGE_DIR/tensorpack && git reset --hard 26664c3f1d58ae029ea6c3ba0af6ae11900b1e55 
+cd $STAGE_DIR/tensorpack && git fetch origin 4ac2e22b8f4f19949b2ce67b2fa37a926d4b5816 
+cd $STAGE_DIR/tensorpack && git reset --hard 4ac2e22b8f4f19949b2ce67b2fa37a926d4b5816 
 
 tar -cvf $STAGE_DIR/tensorpack.tar --directory $STAGE_DIR tensorpack
 
 aws s3 cp $STAGE_DIR/tensorpack.tar s3://$S3_BUCKET/$S3_PREFIX/tensorpack.tar
 
-aws s3 cp run.sh s3://$S3_BUCKET/$S3_PREFIX/run.sh
-aws s3 cp setup.sh s3://$S3_BUCKET/$S3_PREFIX/setup.sh
-aws s3 cp attach-fsx.sh s3://$S3_BUCKET/$S3_PREFIX/attach-fsx.sh
-aws s3 cp cluster-health-check.sh s3://$S3_BUCKET/$S3_PREFIX/cluster-health-check.sh
+aws s3 cp $DIR/run.sh s3://$S3_BUCKET/$S3_PREFIX/run.sh
+aws s3 cp $DIR/setup.sh s3://$S3_BUCKET/$S3_PREFIX/setup.sh
